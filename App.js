@@ -3,14 +3,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 
-import { Platform, StatusBar, StyleSheet, Text, View } from "react-native";
-import { AppProvider } from "./Backend/Context";
-import Index from "./Backend/Index";
-import Group from "./Components/Group";
-import Header from "./Components/Header";
+import { Platform, StatusBar, StyleSheet} from "react-native";
+import Index from "./src/Backend/Index";
+import Header from "./src/FrontEnd/Components/Others/Header";
+import Modal from "./src/FrontEnd/Home/Modal";
+import Group from "./src/FrontEnd/Pages/Group";
+import Match from "./src/FrontEnd/Pages/Match";
+import { AppProvider } from "./src/Function/Context";
+import Navigations from "./src/Function/Navigation";
+import Notification from "./src/Notification/Notification";
 
-import Match from "./Components/Match";
-import Modal from "./Components/Modal";
+
+
 
 const stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -29,20 +33,18 @@ export default function App() {
   });
 
   return (
+    <NavigationContainer style={styles.container}>
     <AppProvider>
       {ModalState ? (
         <Modal />
       ) : (
-        <NavigationContainer style={styles.container}>
-          <Header />
-          <Tab.Navigator>
-            <Tab.Screen name="Match" component={Match} />
-            <Tab.Screen name="Backend" component={Index} />
-            <Tab.Screen name="Group" component={Group} />
-          </Tab.Navigator>
-        </NavigationContainer>
+       
+      
+ <Navigations/>
+       
       )}
     </AppProvider>
+    </NavigationContainer>
   );
 }
 

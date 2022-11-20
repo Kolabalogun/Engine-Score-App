@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Count from "./Count";
 import TextType from "./Text";
-import { useGlobalContext } from "./Context";
+import { useGlobalContext } from "../Function/Context";
 
 const MatchOne = () => {
   const {

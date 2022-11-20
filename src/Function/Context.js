@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState, useContext, useEffect } from "react";
-import { GroupArray } from "../Components/GroupState";
-import { MatchArray } from "../Components/MatchArray";
+import React, { useState, useContext } from "react";
+
+import { MatchArray } from "../FrontEnd/Components/Match/MatchArray";
+import { GroupArray } from "../FrontEnd/Components/Group/GroupState";
+
 
 const AppContext = React.createContext();
 

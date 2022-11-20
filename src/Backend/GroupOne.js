@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useGlobalContext } from "./Context";
+import { useGlobalContext } from "../Function/Context";
 import TextType from "./Text";
 import Count from "./Count";
 

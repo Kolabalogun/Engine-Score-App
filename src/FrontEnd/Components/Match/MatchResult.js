@@ -1,6 +1,7 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useGlobalContext } from "../Backend/Context";
+import { useGlobalContext } from "../../../Function/Context";
+
 
 const MatchResult = () => {
   const { MatchState } = useGlobalContext();
@@ -17,7 +18,7 @@ const MatchResult = () => {
             <Text style={styles.teamName}>Mechanical Engineering</Text>
             <View style={styles.hh}>
               <Image
-                source={require("../assets/logo-01.png")}
+                source={require("../../../../assets/logo-01.png")}
                 style={styles.logo}
               />
             </View>
@@ -31,7 +32,7 @@ const MatchResult = () => {
             <Text style={styles.teamName}>Computer Engineering</Text>
             <View style={styles.hh}>
               <Image
-                source={require("../assets/logo-02.png")}
+                source={require("../../../../assets/logo-02.png")}
                 style={styles.logo}
               />
             </View>

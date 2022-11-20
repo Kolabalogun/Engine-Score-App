@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { useGlobalContext } from "../../Function/Context";
+import Grouplist from "../Components/Group/Grouplist";
 
-import Grouplist from "./Grouplist";
-import { useGlobalContext } from "../Backend/Context";
 
 const Group = () => {
   const { Group } = useGlobalContext();

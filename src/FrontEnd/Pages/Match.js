@@ -10,10 +10,13 @@ import {
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import MatchList from "./MatchList";
-import { useGlobalContext } from "../Backend/Context";
+import MatchList from "../Components/Match/MatchList";
+// import { useGlobalContext } from "../../Backend/Context";
 import { NavigationContainer } from "@react-navigation/native";
-import MatchResult from "./MatchResult";
+// import MatchResult from "../Components/Match/MatchResult";
+import { useGlobalContext } from "../../Function/Context";
+import MatchResult from "../Components/Match/MatchResult";
+import { color } from "react-native-reanimated";
 
 const stack = createStackNavigator();
 
@@ -79,27 +82,35 @@ const Match = ({ navigation }) => {
     }
   });
 
-  function Screen_A(params) {
+  function Screen_A() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.main}>
-          <View style={styles.title}>
-            <Text style={styles.titleText}>Engine 4.0</Text>
-          </View>
 
-          <Text style={styles.groupName}>Matchday One</Text>
+        <View style={styles.container}>
 
-          {MatchDayOneElements}
-
-          <Text style={styles.groupName}>Matchday Two</Text>
-
-          {MatchDayTwoElements}
-
-          <Text style={styles.groupName}>Matchday Three</Text>
-
-          {MatchDayThreeElements}
+      {/* <View style={styles.homeHeader}>
+        <View style={styles.profilePic}>
+        <Image
+            source={require("../../../assets/pro.jpg")}
+            resizeMode="cover"
+            style={{ height: 40, width: 40, borderRadius: 50 }}
+          />
         </View>
-      </ScrollView>
+        <View style={styles.headerTitleDiv}>
+       <Text style={styles.headerTitle}>Engine <Text style={styles.headerTitleScore} >Scores</Text></Text>
+        </View>
+        <View style={styles.profilePic}>
+        <Image
+            source={require("../../../assets/pro.jpg")}
+            resizeMode="cover"
+            style={{ height: 40, width: 40, borderRadius: 50 }}
+          />
+        </View>
+      </View> */}
+
+    </View>
+   
+
+  
     );
   }
 
@@ -120,8 +131,25 @@ export default Match;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#f5f5f5",
+    padding: 10
   },
+
+  homeHeader :{
+display: 'flex',
+flexDirection: 'row',
+justifyContent: 'space-between',
+alignItems: 'center'
+  },
+
+  headerTitle :{
+fontSize:26,
+fontWeight: '400'
+
+  },
+
+
+
 
   main: {
     padding: 15,

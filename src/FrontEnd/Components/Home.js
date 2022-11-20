@@ -2,9 +2,11 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform, StatusBar, StyleSheet, Text, View } from "react-native";
-import Group from "./Group";
-import Header from "./Header";
-import Match from "./Match";
+import Notification from "../../Notification/Notification";
+
+import Group from "../Pages/Group";
+import Header from "./Others/Header";
+import Match from "../Pages/Match";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,6 +19,7 @@ const Home = () => {
       <Tab.Navigator>
         <Tab.Screen name="Match" component={Match} />
         <Tab.Screen name="Group" component={Group} />
+        <Tab.Screen name="Notification" component={Notification} />
       </Tab.Navigator>
     </NavigationContainer>
   );

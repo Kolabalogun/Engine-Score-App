@@ -5,11 +5,11 @@ import { StatusBar } from "expo-status-bar";
 const Modal = () => {
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require("../assets/logo-01.png")} />
+      <Image style={styles.logo} source={require("../../../assets/logo-01.png")} />
       <View style={styles.bannerView}>
         <Image
           style={styles.modalBanner}
-          source={require("../assets/banner1.png")}
+          source={require("../../../assets/banner1.png")}
         />
       </View>
       <Text style={styles.modaltxt}>Engine Score App</Text>
