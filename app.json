@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "myapp2",
-    "slug": "myapp2",
+    "name": "Engine Scores",
+    "slug": "ESA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/balllw.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/balll.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#edeff2"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,31 +17,38 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+
+    
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/balll.png",
+        "backgroundColor": "#edeff2"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.ibrahimdevv.ESA"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
     
-  },
-  
-  
-      "plugins": [
-        [
-          "expo-notifications",
-          {
-            "sounds": ["./assets/n.wav"]
-          }
-        ]
+      [
+        "expo-notifications",
+           {"icon": "./assets/notification-icon.png", "color": "#ffffff"}
+    
       ]
+    ],
     
-  
-  
+    "extra": {
+      "eas": {
+        "projectId": "e9ce2d52-3d8b-44ee-bc15-df2978ec7cf9"
+      }
+    }
+  }
 }

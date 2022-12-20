@@ -1,149 +1,152 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  RefreshControl,
+} from "react-native";
 import React from "react";
 import { useGlobalContext } from "../../Function/Context";
+import { styles } from "../../Function/styles";
 import Grouplist from "../Components/Group/Grouplist";
 
+import Header from "../Components/Others/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Nav from "../Components/Others/Nav";
+import Loader from "../Components/Others/Loader";
 
-const Group = () => {
-  const { Group } = useGlobalContext();
+const Group = ({ navigation }) => {
+  const { TeamsFromDB, getTeamsFromDB, competitionType, loader } =
+    useGlobalContext();
 
-  const points = Group;
+  const points = TeamsFromDB;
   points.sort(function (a, b) {
-    return b.points - a.points;
+    if (b.stat.points === a.stat.points){
+     return b.stat.gd - a.stat.gd;
+    } else return  (b.stat.points - a.stat.points) 
   });
 
+  // sort(function (a, b) {
+  //   if (a.point == b.point) return 0;
+  //   if (a.point > b.point) return -1;
+  //   return 1;
+  // });
+
+
+
+
   const Group1Elements = points.map((group, index) => {
-    if (group.group === 1) {
+    if (group.TeamGroup === 1 && group.Competition === competitionType) {
       return (
         <Grouplist
           key={index}
           id={group.id}
-          name={group.name}
-          played={group.played}
-          draw={group.draw}
-          win={group.won}
-          lost={group.lost}
-          gd={group.goalD}
-          point={group.points}
+          name={group.TeamName}
+          played={group.stat.matchplayed}
+          draw={group.stat.draw}
+          win={group.stat.wins}
+          lost={group.stat.loss}
+          gd={group.stat.gd}
+          point={group.stat.points}
         />
       );
     }
   });
   const Group2Elements = points.map((group, index) => {
-    if (group.group === 2) {
+    if (group.TeamGroup === 2 && group.Competition === competitionType) {
       return (
         <Grouplist
           key={index}
           id={group.id}
-          name={group.name}
-          played={group.played}
-          draw={group.draw}
-          win={group.won}
-          lost={group.lost}
-          gd={group.goalD}
-          point={group.points}
+          name={group.TeamName}
+          played={group.stat.matchplayed}
+          draw={group.stat.draw}
+          win={group.stat.wins}
+          lost={group.stat.loss}
+          gd={group.stat.gd}
+          point={group.stat.points}
         />
       );
     }
   });
 
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getTeamsFromDB();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.main}>
-        <View style={styles.title}>
-          <Text style={styles.titleText}>Engine 4.0</Text>
-        </View>
-        <View style={styles.group}>
-          <Text style={styles.groupName}>Group One</Text>
-          <View style={styles.table}>
-            <View style={styles.topTable}>
-              {/* <Text style={styles.tableHead}>No</Text> */}
-              <Text style={styles.tableHead}>Teams</Text>
-              <Text style={styles.tableHead}>P</Text>
-              <Text style={styles.tableHead}>W</Text>
-              <Text style={styles.tableHead}>L</Text>
-              <Text style={styles.tableHead}>D</Text>
-              <Text style={styles.tableHead}>GD</Text>
-              <Text style={styles.tableHead}>Pts</Text>
+    <SafeAreaView style={styles.container}>
+      <Header navigation={navigation} />
+
+      <Nav />
+
+      {loader ? (
+        <Loader />
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              colors={["#377D71"]}
+              onRefresh={onRefresh}
+            />
+          }
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.group}>
+            {
+              competitionType === 'Engine 4.0' ?
+               <Text style={styles.groupName}>Group One</Text> :
+                <Text style={styles.groupName}>Standing</Text>
+            }
+           
+            <View style={styles.table}>
+              <View style={styles.topTable}>
+                {/* <Text style={styles.tableHead}>No</Text> */}
+                <Text style={styles.tableHeadOne}>Teams</Text>
+                <Text style={styles.tableHead}>P</Text>
+                <Text style={styles.tableHead}>W</Text>
+                <Text style={styles.tableHead}>L</Text>
+                <Text style={styles.tableHead}>D</Text>
+                <Text style={styles.tableHead}>GD</Text>
+                <Text style={styles.tableHead}>Pts</Text>
+              </View>
+              {Group1Elements}
             </View>
-            {Group1Elements}
           </View>
-        </View>
-        <View style={styles.group}>
-          <Text style={styles.groupName}>Group One</Text>
-          <View style={styles.table}>
-            <View style={styles.topTable}>
-              {/* <Text style={styles.tableHead}>No</Text> */}
-              <Text style={styles.tableHead}>Teams</Text>
-              <Text style={styles.tableHead}>P</Text>
-              <Text style={styles.tableHead}>W</Text>
-              <Text style={styles.tableHead}>L</Text>
-              <Text style={styles.tableHead}>D</Text>
-              <Text style={styles.tableHead}>GD</Text>
-              <Text style={styles.tableHead}>Pts</Text>
+            { competitionType === 'Engine 4.0' && <> 
+          <View style={styles.group}>
+       <Text style={styles.groupName}>Group Two</Text>
+            <View style={styles.table}>
+              <View style={styles.topTable}>
+                {/* <Text style={styles.tableHead}>No</Text> */}
+                <Text style={styles.tableHeadOne}>Teams</Text>
+                <Text style={styles.tableHead}>P</Text>
+                <Text style={styles.tableHead}>W</Text>
+                <Text style={styles.tableHead}>L</Text>
+                <Text style={styles.tableHead}>D</Text>
+                <Text style={styles.tableHead}>GD</Text>
+                <Text style={styles.tableHead}>Pts</Text>
+              </View>
+              {Group2Elements}
             </View>
-            {Group2Elements}
+            
           </View>
-        </View>
-      </View>
-    </ScrollView>
+         </> }
+        </ScrollView>
+      )}
+    </SafeAreaView>
   );
 };
 
 export default Group;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#aaa",
-    backgroundColor: "aliceblue",
-  },
-  main: {
-    padding: 15,
-  },
-  group: {
-    padding: 0,
-    marginBottom: 30,
-  },
 
-  groupName: {
-    fontSize: 16,
-    fontWeight: "500",
-    paddingTop: 3,
-    paddingBottom: 3,
-    borderTopWidth: 1,
-    borderTopColor: "#aaa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#aaa",
-    color: "black",
-    marginBottom: 10,
-    marginTop: 5,
-  },
-
-  table: {
-    display: "flex",
-    flexDirection: "column",
-    color: "#aaa",
-    paddingTop: 10,
-    alignItems: "center",
-  },
-  topTable: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    alignItems: "center",
-  },
-
-  tableHead: {
-    color: "black",
-
-    // padding: 3,
-  },
-  titleText: {
-    fontSize: 15,
-    fontWeight: "600",
-    // marginBottom: 10,
-  },
-});

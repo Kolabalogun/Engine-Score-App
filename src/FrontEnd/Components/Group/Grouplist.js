@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 const Grouplist = ({
-  id,
+
   name,
   played,
 
@@ -13,15 +13,89 @@ const Grouplist = ({
   point,
 }) => {
   return (
-    <View style={styles.topTablerow}>
-      {/* <Text style={styles.tableHeadone}>{id}</Text> */}
-      <Text style={styles.tableHeadone}>{name}</Text>
-      <Text style={styles.tableHead}>{played}</Text>
-      <Text style={styles.tableHead}>{win}</Text>
-      <Text style={styles.tableHead}>{lost}</Text>
-      <Text style={styles.tableHead}>{draw}</Text>
-      <Text style={styles.tableHead}>{gd}</Text>
-      <Text style={styles.tableHead}>{point}</Text>
+    <View style={styles.topTable}>
+      <Text
+        style={[
+          styles.tableHeadone,
+          {
+            alignItems: "center",
+        fontsize: 13,
+          }
+        ]}
+      >
+        {name}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+          fontsize: 13,
+          },
+        ]}
+      >
+        {played}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+            alignItems: "center",
+             fontsize: 13,
+          },
+        ]}
+      >
+        {win}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+            alignItems: "center",
+            fontsize: 13,
+          },
+        ]}
+      >
+        {lost}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+            alignItems: "center",
+            fontsize: 13,
+          },
+        ]}
+      >
+        {draw}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+            alignItems: "center",
+          fontsize: 13,
+          },
+        ]}
+      >
+        {gd}
+      </Text>
+      <Text
+        style={[
+          styles.tableHead,
+          {
+            fontWeight: "400",
+            alignItems: "center",
+              fontsize: 13,
+          },
+        ]}
+      >
+        {point}
+      </Text>
     </View>
   );
 };
@@ -29,7 +103,8 @@ const Grouplist = ({
 export default Grouplist;
 
 const styles = StyleSheet.create({
-  topTablerow: {
+  
+  topTable: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
@@ -40,15 +115,12 @@ const styles = StyleSheet.create({
 
   tableHead: {
     color: "black",
-    // padding: 3,
-    alignItems: "center",
-    fontSize: 13,
+
+    flex: 1,
   },
   tableHeadone: {
     color: "black",
-    paddingRight: 5,
-    alignItems: "center",
-    // width: 30,
-    fontSize: 13,
+
+    flex: 4,
   },
 });

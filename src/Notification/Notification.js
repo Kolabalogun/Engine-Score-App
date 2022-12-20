@@ -1,4 +1,4 @@
-// import * as Device from 'expo-device';
+import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function Notification() {
+export default function Notification({navigation}) {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -53,6 +53,7 @@ export default function Notification() {
           await schedulePushNotification();
         }}
       />
+            <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
 }
@@ -70,6 +71,24 @@ async function schedulePushNotification() {
 }
 
 
+ const handleSubmit = async (e) => {
+    e.preventDefault();
+loaderF('true')
+        try {
+            await addDoc(collection(db, "Users"), {
+              // UserToken: token,
+
+              expoPushToken: expoPushToken
+                
+            });
+            loaderF("false");
+
+        } catch (error) {
+            console.log(error);
+            // notificationF(error);
+        }
+
+};
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -96,6 +115,11 @@ async function registerForPushNotificationsAsync() {
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
+    // handleSubmit()
+
+
+
+
   } else {
     alert('Must use physical device for Push Notifications');
   }
