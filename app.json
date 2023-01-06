@@ -31,7 +31,7 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.ibrahimdevv.ESA"
+      "package": "com.ibrahimdevv.ESA" 
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,7 +40,7 @@
     
       [
         "expo-notifications",
-           {"icon": "./assets/notification-icon.png", "color": "#ffffff"}
+           {"icon": "./assets/ico.png", "color": "#ffffff"}
     
       ]
     ],

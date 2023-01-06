@@ -43,7 +43,7 @@ const CreateMatch = ({ navigation }) => {
   }, [Competition, TeamsFromDB]);
 
   const competitionData = ["Engine 4.0", "Engine 3.0"];
-  const formationData = [ "4-3-3", "4-2-3-1", "3-4-3", "3-5-2"];
+  const formationData = ["4-3-3", "4-2-3-1", "3-4-3", "3-5-2"];
 
   const [HomeTeam, HomeTeamF] = useState("");
   const [HomeTeamFormation, HomeTeamFormationF] = useState("");
@@ -71,17 +71,12 @@ const CreateMatch = ({ navigation }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     if (MatchDate.length < 6 || Matchtime.length < 5) {
-
-notificationF('Invalid Date or Time Format')
-
-      
-    }
-
- else   if (HomeTeam === AwayTeam) {
-     return notificationF("Same Team can't be Matched"); 
-    } else{
+      notificationF("Invalid Date or Time Format");
+    } else if (HomeTeam === AwayTeam) {
+      return notificationF("Same Team can't be Matched");
+    } else {
       if (
         HomeTeam &&
         AwayTeam &&
@@ -134,7 +129,6 @@ notificationF('Invalid Date or Time Format')
   function navigateTogoBack(params) {
     navigation.goBack();
   }
-
 
   return (
     <>
@@ -279,6 +273,7 @@ notificationF('Invalid Date or Time Format')
                       placeholder="Enter Time e.g (03:00)"
                       maxLength={5}
                       style={styles.InputTextArea}
+                      keyboardType="decimal-pad"
                     />
                   </View>
                 </View>
@@ -286,7 +281,7 @@ notificationF('Invalid Date or Time Format')
               <Text style={{ color: "red", alignSelf: "center", padding: 3 }}>
                 {notification}
               </Text>
-          <Button handleSubmit={handleSubmit}/>
+              <Button handleSubmit={handleSubmit} />
             </ScrollView>
           </View>
         </SafeAreaView>
@@ -296,5 +291,3 @@ notificationF('Invalid Date or Time Format')
 };
 
 export default CreateMatch;
-
-

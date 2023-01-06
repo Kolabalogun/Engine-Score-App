@@ -18,14 +18,13 @@ import { useGlobalContext } from "../../Function/Context";
 import { auth } from "../../Utils/Firebase";
 import Loader from "../../FrontEnd/Components/Others/Loader";
 
-
 const Login = ({ navigation }) => {
   const {
     notification,
     notificationF,
     loader,
     loaderF,
-    
+
     currentAdminF,
   } = useGlobalContext();
 
@@ -36,14 +35,13 @@ const Login = ({ navigation }) => {
   const [password, passwordF] = useState("");
 
   const handleSignIn = () => {
-   
     if (studentID && password) {
-         loaderF(true)
+      loaderF(true);
       signInWithEmailAndPassword(auth, studentEmail, password)
         .then((userCredential) => {
           const user = userCredential.user;
-        currentAdminF(user)
-        navigation.navigate('AuthNavigations')
+          currentAdminF(user);
+          navigation.navigate("AuthNavigations");
         })
 
         .catch((error) => {
@@ -51,7 +49,7 @@ const Login = ({ navigation }) => {
           const errorMessage = error.message;
           notificationF(errorMessage);
         });
-        loaderF(false)
+      loaderF(false);
     } else {
       notificationF("All field must be filled");
     }
@@ -64,7 +62,6 @@ const Login = ({ navigation }) => {
       ) : (
         <>
           <View style={styles.logo}>
-    
             <Text style={styles.logoTxt}>EngineScores</Text>
           </View>
           <View style={{ flex: 1, justifyContent: "center" }}>
@@ -81,7 +78,7 @@ const Login = ({ navigation }) => {
                 </Text>
                 <TextInput
                   value={studentID}
-                  name= 'email'
+                  name="name"
                   onChangeText={(e) => studentIDF(e)}
                   placeholder="Enter your studentID"
                   style={styles.Input}
@@ -98,7 +95,7 @@ const Login = ({ navigation }) => {
                   placeholder="Enter your password"
                   secureTextEntry={true}
                   style={styles.Input}
-                  name= 'password'
+                  name="password"
                 />
               </View>
             </View>

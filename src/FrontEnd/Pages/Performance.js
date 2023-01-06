@@ -19,23 +19,29 @@ import Loader from "../Components/Others/Loader";
 import Nav from "../Components/Others/Nav";
 
 const Performance = ({ navigation }) => {
-  const { competitionType, competitionTypeF, competition, competitionF, loader, loaderF } =
-    useGlobalContext();
+  const {
+    competitionType,
+    competitionTypeF,
+    competition,
+    PlayerGoalAssistData,
+    loader,
+    loaderF,
+  } = useGlobalContext();
 
-  const [PlayerDataFromDB, PlayerDataFromDBF] = useState([]);
+  const [PlayerDataFromDB, PlayerDataFromDBF] = useState(PlayerGoalAssistData);
 
   useEffect(() => {
     getBlogDetail();
   }, []);
 
   const getBlogDetail = async () => {
-loaderF(true)
+    loaderF(true);
     const docRef = doc(db, "Player Data", "WmVhSufxYzBSkL8HsqkF");
     const snapshot = await getDoc(docRef);
     if (snapshot.exists()) {
       PlayerDataFromDBF([...snapshot.data().playerDatas]);
     }
-    loaderF(false)
+    loaderF(false);
   };
 
   const goalsRanking = PlayerDataFromDB;
@@ -57,11 +63,11 @@ loaderF(true)
             <Image
               source={require("../../../assets/logo-01.png")}
               resizeMode="contain"
-            style={{height: 40, width: 40 }}
-          />
+              style={{ height: 40, width: 40 }}
+            />
             <View>
               <Text style={styles.eachPerformanceScore}>{goal.PlayerName}</Text>
-            <Text style={{ color: "#aaa" }}>{goal.TeamNameSelect}</Text>
+              <Text style={{ color: "#aaa" }}>{goal.TeamNameSelect}</Text>
             </View>
           </View>
 
@@ -92,11 +98,11 @@ loaderF(true)
             <Image
               source={require("../../../assets/logo-01.png")}
               resizeMode="contain"
-            style={{height: 40, width: 40 }}
+              style={{ height: 40, width: 40 }}
             />
-            <View style={{}}>
+            <View>
               <Text style={styles.eachPerformanceScore}>{goal.PlayerName}</Text>
-              <Text style={{ color: "#aaa"}}>{goal.TeamNameSelect}</Text>
+              <Text style={{ color: "#aaa" }}>{goal.TeamNameSelect}</Text>
             </View>
           </View>
 
@@ -130,7 +136,6 @@ loaderF(true)
             <RefreshControl
               refreshing={refreshing}
               colors={["#377D71"]}
-              
               onRefresh={onRefresh}
             />
           }
@@ -158,4 +163,3 @@ loaderF(true)
 };
 
 export default Performance;
-

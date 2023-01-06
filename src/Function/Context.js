@@ -1,7 +1,6 @@
 import { StyleSheet, Text, LogBox } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 
-
 import { useNavigation } from "@react-navigation/native";
 
 import { auth, db, provider } from "../Utils/Firebase";
@@ -50,32 +49,32 @@ const AppProvider = ({ children }) => {
     return a.dateId - b.dateId;
   });
 
-  function getTeamsFromDB (params) {
-      loaderF(true);
-      const unsub = onSnapshot(
-        collection(db, "Teams"),
+  function getTeamsFromDB(params) {
+    loaderF(true);
+    const unsub = onSnapshot(
+      collection(db, "Teams"),
 
-        (snapshot) => {
-          let list = [];
+      (snapshot) => {
+        let list = [];
 
-          snapshot.docs.forEach((doc) => {
-            list.push({ id: doc.id, ...doc.data() });
-          });
-          TeamsFromDBiF(list);
-          loaderF(false);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        snapshot.docs.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        TeamsFromDBiF(list);
+        loaderF(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
-      return () => {
-        unsub();
-      };
+    return () => {
+      unsub();
+    };
   }
 
   useEffect(() => {
-  getTeamsFromDB()
+    getTeamsFromDB();
   }, []);
   // get list of users from firebase
 
@@ -97,18 +96,15 @@ const AppProvider = ({ children }) => {
 
   // to delete Teams
   const handleDeleteTeam = async (id) => {
- try {
+    try {
       loaderF(true);
       await deleteDoc(doc(db, "Teams", id));
       loaderF(false);
-    
     } catch (error) {
       console.log(error);
     }
-
   };
   // to delete Teams
-
 
   // get list of teams from firebase
 
@@ -119,9 +115,7 @@ const AppProvider = ({ children }) => {
     return a.dateId - b.dateId;
   });
 
-
-  const getMatchsFromDB =() => {
-
+  const getMatchsFromDB = () => {
     loaderF(true);
     const unsub = onSnapshot(
       collection(db, "Matchs"),
@@ -143,12 +137,11 @@ const AppProvider = ({ children }) => {
     return () => {
       unsub();
     };
- 
-    
-  }
+  };
 
   useEffect(() => {
-   getMatchsFromDB()
+    getMatchsFromDB();
+    getPlayerGoalAssistData();
   }, []);
 
   // to delete Matchs
@@ -167,36 +160,35 @@ const AppProvider = ({ children }) => {
     // }
   };
 
-  // get list of top picks from firebase
-
+  // get list of
   const [TopPicksDB, TopPicksDBF] = useState([]);
 
   function getTopPick(params) {
-      loaderF(true);
-      const unsub = onSnapshot(
-        collection(db, "Top Pick"),
+    loaderF(true);
+    const unsub = onSnapshot(
+      collection(db, "Top Pick"),
 
-        (snapshot) => {
-          let list = [];
+      (snapshot) => {
+        let list = [];
 
-          snapshot.docs.forEach((doc) => {
-            list.push({ id: doc.id, ...doc.data() });
-          });
-          TopPicksDBF(list);
-          loaderF(false);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        snapshot.docs.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        TopPicksDBF(list);
+        loaderF(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
-      return () => {
-        unsub();
-      };
+    return () => {
+      unsub();
+    };
   }
 
   useEffect(() => {
-   getTopPick()
+    getTopPick();
   }, []);
 
   // check if there is internet connecttion
@@ -214,7 +206,7 @@ const AppProvider = ({ children }) => {
 
   const [currentUser, currentUserF] = useState(false);
 
-  const [currentTheme, currentThemeF] = useState('Default');
+  const [currentTheme, currentThemeF] = useState("Default");
 
   const storeData = async (value) => {
     try {
@@ -267,55 +259,51 @@ const AppProvider = ({ children }) => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  // AutoUpdate
 
-  // AutoUpdate 
+  // let projectVersion = "1.8";
 
+  const [projectVersion, projectVersionF] = useState("1.8");
 
-  let projectVersion = '1.7'
+  const [AutoUpdateState, AutoUpdateStateF] = useState({
+    isthereUpdate: false,
+    link: "",
+    currentVersion: projectVersion,
+  });
 
-    const [AutoUpdateState, AutoUpdateStateF] = useState({
-      isthereUpdate: false,
-      link: "",
-      currentVersion: projectVersion
-    });
+  useEffect(() => {
+    getUpdateDetail();
+  }, []);
 
-    useEffect(() => {
-      getUpdateDetail();
-    }, []);
+  const getUpdateDetail = async () => {
+    loaderF(true);
+    const docRef = doc(db, "AutoUpdate", "uhTnMICHPaLJOx5TJSw1");
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      AutoUpdateStateF({ ...snapshot.data() });
+    }
+    loaderF(false);
+  };
 
-    const getUpdateDetail = async () => {
-      loaderF(true);
-      const docRef = doc(db, "AutoUpdate", "uhTnMICHPaLJOx5TJSw1");
-      const snapshot = await getDoc(docRef);
-      if (snapshot.exists()) {
-        AutoUpdateStateF({ ...snapshot.data() });
-      }
-      loaderF(false);
-    };
+  // console.log(AutoUpdateState);
 
-    // console.log(AutoUpdateState);
+  // List of GoalScorers and Assits
 
+  const [PlayerGoalAssistData, PlayerGoalAssistDataF] = useState([]);
 
-    // List of GoalScorers and Assits 
+  useEffect(() => {
+    getPlayerGoalAssistData();
+  }, []);
 
-      const [PlayerGoalAssistData, PlayerGoalAssistDataF] = useState([]);
-
-      useEffect(() => {
-        getPlayerGoalAssistData();
-      }, []);
-
-      const getPlayerGoalAssistData = async () => {
-        loaderF(true);
-        const docRef = doc(db, "Player Data", "WmVhSufxYzBSkL8HsqkF");
-        const snapshot = await getDoc(docRef);
-        if (snapshot.exists()) {
-          PlayerGoalAssistDataF([ ...snapshot.data().playerDatas ]);
-        }
-        loaderF(false);
-      };
-
-
-
+  const getPlayerGoalAssistData = async () => {
+    loaderF(true);
+    const docRef = doc(db, "Player Data", "WmVhSufxYzBSkL8HsqkF");
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      PlayerGoalAssistDataF([...snapshot.data().playerDatas]);
+    }
+    loaderF(false);
+  };
 
   return (
     <AppContext.Provider
@@ -326,9 +314,11 @@ const AppProvider = ({ children }) => {
 
         currentUser,
         currentUserF,
-        currentAdmin, currentAdminF,
+        currentAdmin,
+        currentAdminF,
         storeTheme,
-        currentTheme, currentThemeF,
+        currentTheme,
+        currentThemeF,
 
         loader,
         loaderF,
@@ -339,7 +329,6 @@ const AppProvider = ({ children }) => {
         competitionF,
 
         handleDeleteTeam,
-        
 
         MatchsFromDB,
 
@@ -357,7 +346,9 @@ const AppProvider = ({ children }) => {
         getTopPick,
         getTeamsFromDB,
         AutoUpdateState,
+        AutoUpdateStateF,
         projectVersion,
+        projectVersionF,
 
         PlayerGoalAssistData,
         getPlayerGoalAssistData,

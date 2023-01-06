@@ -50,13 +50,13 @@ const MatchResult = ({ route, navigation }) => {
   }, [matchId]);
 
   const getBlogDetail = async () => {
-    loaderF(true)
+    loaderF(true);
     const docRef = doc(db, "Matchs", matchId);
     const snapshot = await getDoc(docRef);
     if (snapshot.exists()) {
       matchhInfoF({ ...snapshot.data() });
     }
-      loaderF(false);
+    loaderF(false);
   };
 
   const {
@@ -120,23 +120,20 @@ const MatchResult = ({ route, navigation }) => {
   const Away352 = require("../../../assets/formations/3-5-2away.png");
   const Away4231 = require("../../../assets/formations/4-3-2-1away.png");
 
+  const handleDeleteMatchSummary = async (id) => {
+    const data = MatchTimeline?.filter((dad, index) => dad.dateId !== id);
 
-   const handleDeleteMatchSummary = async (id) => {
-     const data = MatchTimeline?.filter((dad, index) => dad.dateId !== id);
+    try {
+      await updateDoc(doc(db, "Matchs", matchId), {
+        ...matchhInfo,
 
-
-
-      try {
-        await updateDoc(doc(db, "Matchs", matchId), {
-          ...matchhInfo,
-
-          MatchTimeline: [...data],
-        });
-      } catch (error) {
-        console.log(error, "line 219");
-      }
-     getBlogDetail();
-   };
+        MatchTimeline: [...data],
+      });
+    } catch (error) {
+      console.log(error, "line 219");
+    }
+    getBlogDetail();
+  };
 
   return (
     <ScrollView
@@ -186,7 +183,7 @@ const MatchResult = ({ route, navigation }) => {
               style={[
                 styles.headerTitle,
                 {
-                  fontsize: 12,
+                  fontSize: 13,
                   color: "white",
                 },
               ]}
@@ -247,10 +244,12 @@ const MatchResult = ({ route, navigation }) => {
                         flex: 1,
                       }}
                     >
-
-                     
-                     
-                      <Text style={[styles.resulteachMatchTeamTime, { color: "black" }] }>
+                      <Text
+                        style={[
+                          styles.resulteachMatchTeamTime,
+                          { color: "black" },
+                        ]}
+                      >
                         {Matchtime}
                       </Text>
                       <Text
@@ -390,8 +389,10 @@ const MatchResult = ({ route, navigation }) => {
                   />
 
                   <View style={styles.formation}>
-                    <Text style={{fontsize: 12}}>{HomeTeam}</Text>
-                    <Text style={{ color: "#aaa", fontSize: 12 }}>{HomeTeamFormation}</Text>
+                    <Text style={{ fontsize: 12 }}>{HomeTeam}</Text>
+                    <Text style={{ color: "#aaa", fontSize: 12 }}>
+                      {HomeTeamFormation}
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.team}>
@@ -402,16 +403,18 @@ const MatchResult = ({ route, navigation }) => {
                   />
 
                   <View style={styles.formation}>
-                    <Text style={{fontsize: 12}}>{AwayTeam}</Text>
-                    <Text style={{ color: "#aaa", fontSize: 12 }}>{AwayTeamFormation}</Text>
+                    <Text style={{ fontsize: 12 }}>{AwayTeam}</Text>
+                    <Text style={{ color: "#aaa", fontSize: 12 }}>
+                      {AwayTeamFormation}
+                    </Text>
                   </View>
                 </View>
               </View>
 
-              <View style={{ flexDirection: "row", flex: 1}}>
+              <View style={{ flexDirection: "row", flex: 1 }}>
                 <Image
                   source={
-                  HomeTeamFormation === "4-3-3"
+                    HomeTeamFormation === "4-3-3"
                       ? Home433
                       : HomeTeamFormation === "3-4-3"
                       ? Home343
@@ -420,12 +423,11 @@ const MatchResult = ({ route, navigation }) => {
                       : Home4231
                   }
                   resizeMode="contain"
-              style={{ flex: 1, height: 300,width: '100%' }}
+                  style={{ flex: 1, height: 300, width: "100%" }}
                 />
                 <Image
                   source={
-                  
-                       AwayTeamFormation === "4-3-3"
+                    AwayTeamFormation === "4-3-3"
                       ? Away433
                       : AwayTeamFormation === "3-4-3"
                       ? Away343
@@ -434,14 +436,21 @@ const MatchResult = ({ route, navigation }) => {
                       : Away4231
                   }
                   resizeMode="contain"
-                  style={{ flex: 1, height: 300 ,width: '100%'}}
+                  style={{ flex: 1, height: 300, width: "100%" }}
                 />
               </View>
             </View>
           ) : (
             <View style={styles.formationSection}>
-              {MatchTimeline?.slice(0).reverse().map((details, index) => {
-                  if (details.MatchBody !== null && details.MatchBody !== "" && details.MatchBody !== 'Match Starts in few Minutes. Who will win?') {
+              {MatchTimeline?.slice(0)
+                .reverse()
+                .map((details, index) => {
+                  if (
+                    details.MatchBody !== null &&
+                    details.MatchBody !== "" &&
+                    details.MatchBody !==
+                      "Match Starts in few Minutes. Who will win?"
+                  ) {
                     return (
                       <View style={{ flexDirection: "column" }} key={index}>
                         <View style={styles.eachSummary}>
@@ -450,7 +459,7 @@ const MatchResult = ({ route, navigation }) => {
                               style={{
                                 borderBottomWidth: 1,
                                 borderBottomColor: "#aaa",
-                                 fontsize: 12,
+                                fontsize: 12,
                               }}
                             >
                               {details.MatchBody}
@@ -519,78 +528,111 @@ const MatchResult = ({ route, navigation }) => {
 
             <View style={styles.managerSplit}>
               {HomeTeamData.map((team, index) => (
-                <Text style={{
-   fontsize: 12
-}} key={index}>{team.TeamManager}</Text>
+                <Text
+                  style={{
+                    fontsize: 12,
+                  }}
+                  key={index}
+                >
+                  {team.TeamManager}
+                </Text>
               ))}
               {AwayTeamData.map((team, index) => (
-                <Text style={{
-   fontsize: 12
-}} key={index}>{team.TeamManager}</Text>
+                <Text
+                  style={{
+                    fontsize: 12,
+                  }}
+                  key={index}
+                >
+                  {team.TeamManager}
+                </Text>
               ))}
             </View>
 
             <Text style={styles.manager}>Lineups</Text>
 
-
-             <View style={styles.lineups}>
+            <View style={styles.lineups}>
               {HomeTeamData?.map((team, index) => (
-              <View key={index}>
-                  <Text style={{fontsize: 12}}>{team.Players.goalkepper}</Text> 
-                  <Text style={{fontsize: 12}}>{team.Players.defender1}</Text>  
-                     <Text style={{fontsize: 12}}>{team.Players.defender2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender4}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender5}</Text> 
-                 
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders1}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders4}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders5}</Text>    
-                    </View>
-                  ))} 
-              
-                    {AwayTeamData?.map((team, index) => ( 
-                  <View key={index}>
-                  <Text style={{fontsize: 12}}>{team.Players.goalkepper}</Text> 
-                  <Text style={{fontsize: 12}}>{team.Players.defender1}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.defender4}</Text>   
-                   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders1}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders4}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.midfielders5}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers1}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers4}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers5}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers1}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers2}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers3}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers4}</Text>   
-                  <Text style={{fontsize: 12}}>{team.Players.attakers5}</Text>   
-                    </View>
-                    ))} 
-               
+                <View key={index}>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.goalkepper}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender4}</Text>
 
-                   </View>
-                   
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders1}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders2}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders3}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders4}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders5}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                </View>
+              ))}
 
-           
-              </View> 
-                   </>
-                   
-                   )}
+              {AwayTeamData?.map((team, index) => (
+                <View key={index}>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.goalkepper}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.defender4}</Text>
 
-                 
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders1}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders2}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders3}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders4}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>
+                    {team.Players.midfielders5}
+                  </Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </>
+      )}
+    </ScrollView>
+  );
+};
 
-                    </ScrollView>);
-                    
-                  };
-                  
-                  export default MatchResult;
+export default MatchResult;
