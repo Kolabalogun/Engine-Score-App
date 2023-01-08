@@ -582,11 +582,11 @@ const MatchResult = ({ route, navigation }) => {
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs5}</Text>
                 </View>
               ))}
 
@@ -620,11 +620,11 @@ const MatchResult = ({ route, navigation }) => {
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
                   <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers1}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers2}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers3}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers4}</Text>
-                  <Text style={{ fontsize: 12 }}>{team.Players.attakers5}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs1}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs2}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs3}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs4}</Text>
+                  <Text style={{ fontsize: 12 }}>{team.Players.benchs5}</Text>
                 </View>
               ))}
             </View>

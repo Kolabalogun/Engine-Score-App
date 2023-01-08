@@ -49,8 +49,8 @@ const Performance = ({ navigation }) => {
     return b.Goals - a.Goals;
   });
 
-  const GoalsGroup = goalsRanking.slice(0, 5).map((goal, index) => {
-    if (goal.Competition === competitionType) {
+  const GoalsGroup = goalsRanking.map((goal, index) => {
+    if (goal.Competition === competitionType && goal.Goals !== "0") {
       return (
         <TouchableOpacity
           key={index}
@@ -84,8 +84,8 @@ const Performance = ({ navigation }) => {
     return b.Assists - a.Assists;
   });
 
-  const AssistsGroup = AssistsRanking.slice(0, 6).map((goal, index) => {
-    if (goal.Competition === competitionType) {
+  const AssistsGroup = AssistsRanking.map((goal, index) => {
+    if (goal.Competition === competitionType && goal.Assists !== "0") {
       return (
         <TouchableOpacity
           key={index}
