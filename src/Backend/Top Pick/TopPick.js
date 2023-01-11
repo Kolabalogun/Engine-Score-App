@@ -117,6 +117,23 @@ const TopPick = ({ navigation }) => {
     }
   };
 
+  // Add New Sessions
+
+  const [newSession, newSessionF] = useState("");
+
+  const handleSendUserTokentoDB = async () => {
+    if (newSession !== "") {
+      try {
+        await updateDoc(doc(db, "Sessions", "jw2sFn6C7w9uapYvEdOb"), {
+          ...UsersToken,
+          expoPushTokenFB: arrayUnion(expoPushToken),
+        });
+      } catch (error) {
+        console.log(error, "line 219");
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -236,6 +253,3 @@ const TopPick = ({ navigation }) => {
 };
 
 export default TopPick;
-
-
-

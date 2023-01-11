@@ -45,8 +45,7 @@ const initialState = {
   id: "",
 };
 
-
-// notification 
+// notification
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -56,7 +55,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// notification 
+// notification
 
 const MatchInfo = ({ route, navigation }) => {
   const {
@@ -83,7 +82,7 @@ const MatchInfo = ({ route, navigation }) => {
   }, [matchhInfo]);
 
   const getBlogDetail = async () => {
-    loaderF(true)
+    loaderF(true);
     const docRef = doc(db, "Matchs", matchId);
     const snapshot = await getDoc(docRef);
     if (snapshot.exists()) {
@@ -109,10 +108,8 @@ const MatchInfo = ({ route, navigation }) => {
     Matchplayed,
   } = matchhInfo;
 
-    const [notificationBody, notificationBodyF] = useState(null);
-    const [notificationNote, notificationNoteF] = useState("");
-
-
+  const [notificationBody, notificationBodyF] = useState(null);
+  const [notificationNote, notificationNoteF] = useState("");
 
   const [MatchBody, MatchBodyF] = useState(notificationBody);
 
@@ -120,21 +117,15 @@ const MatchInfo = ({ route, navigation }) => {
     `${HomeTeamScore} - ${AwayTeamScore}`
   );
 
-      useEffect(() => {
-        if (MatchBody === "Red Card" || MatchBody === "Yellow Card") {
-            MatchNoteF(
-              `${notificationNote}`
-            );
-        } else {
+  useEffect(() => {
+    if (MatchBody === "Red Card" || MatchBody === "Yellow Card") {
+      MatchNoteF(`${notificationNote}`);
+    } else {
+      MatchNoteF(`${HomeTeamScore} - ${AwayTeamScore} - ${notificationNote}`);
+    }
+  }, [notificationNote]);
 
-          MatchNoteF(`${HomeTeamScore} - ${AwayTeamScore} - ${notificationNote}`);
-        }
-      }, [notificationNote]);
-    
-
-
-
-  const formationData = [ "4-3-3", "4-2-3-1", "3-4-3", "3-5-2"];
+  const formationData = ["4-3-3", "4-2-3-1", "3-4-3", "3-5-2"];
 
   const [dateId, setdateId] = useState("");
 
@@ -143,29 +134,25 @@ const MatchInfo = ({ route, navigation }) => {
     const dateId = new Date().getTime();
 
     setdateId(dateId);
-  },[notificationBody]);
+  }, [notificationBody]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      matchhInfo
-   
-    ) {
+    if (matchhInfo) {
       loaderF(true);
       try {
         await updateDoc(doc(db, "Matchs", matchId), {
           ...matchhInfo,
-          
+
           MatchTimeline: [...MatchTimeline, { MatchBody, MatchNote, dateId }],
         });
 
         if (notificationBody) {
           await schedulePushNotification();
-           SendNotificationToAllUsers();
+          SendNotificationToAllUsers();
         }
 
-       
         navigation.navigate("MatchList");
 
         loaderF(false);
@@ -258,8 +245,6 @@ const MatchInfo = ({ route, navigation }) => {
 
   // sending Notification
 
-
-
   const [UsersToken, UsersTokenF] = useState([""]);
   const [UsersList, UsersListF] = useState([""]);
 
@@ -276,18 +261,14 @@ const MatchInfo = ({ route, navigation }) => {
     }
   };
 
-  const notes = [
-    "Match Starts in few Minutes. Who will win?",
-    
-  ];
+  const notes = ["Match Starts in few Minutes. Who will win?"];
   const bnotes = [
-   "Match Started",
+    "Match Started",
     "Yellow Card",
     "Red Card",
     `Goal ${HomeTeam} ${HomeTeamScore} - ${AwayTeamScore} ${AwayTeam}`,
     `Halftime ${HomeTeamScore} - ${AwayTeamScore}`,
     `Full Time ${HomeTeamScore} - ${AwayTeamScore}`,
-    
   ];
 
   // send notificatiion multiple user
@@ -573,51 +554,54 @@ const MatchInfo = ({ route, navigation }) => {
                 }}
               />
             </View>
-{MatchBody === 'Goal' && 
-            <View style={{ marginTop: 10, flex: 1 }}>
-              <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
-                Notification Note
-              </Text>
+            {MatchBody === "Goal" && (
+              <View style={{ marginTop: 10, flex: 1 }}>
+                <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
+                  Notification Note
+                </Text>
 
-              <TextInput
-                value={notificationNote}
-                onChangeText={(e) => {
-                  notificationNoteF(e);
-                }}
-                placeholder="Add Goal Scorer's Name"
-                style={styles.InputTextArea}
-              />
-            </View>}
-{MatchBody === 'Yellow Card' && 
-            <View style={{ marginTop: 10, flex: 1 }}>
-              <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
-                Notification Note
-              </Text>
+                <TextInput
+                  value={notificationNote}
+                  onChangeText={(e) => {
+                    notificationNoteF(e);
+                  }}
+                  placeholder="Add Goal Scorer's Name"
+                  style={styles.InputTextArea}
+                />
+              </View>
+            )}
+            {MatchBody === "Yellow Card" && (
+              <View style={{ marginTop: 10, flex: 1 }}>
+                <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
+                  Notification Note
+                </Text>
 
-              <TextInput
-                value={notificationNote}
-                onChangeText={(e) => {
-                  notificationNoteF(e);
-                }}
-                placeholder="Add Goal Scorer's Name"
-                style={styles.InputTextArea}
-              />
-            </View>}
-{MatchBody === 'Red Card' && 
-            <View style={{ marginTop: 10, flex: 1 }}>
-              <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
-                Notification Note
-              </Text>
+                <TextInput
+                  value={notificationNote}
+                  onChangeText={(e) => {
+                    notificationNoteF(e);
+                  }}
+                  placeholder="Add Goal Scorer's Name"
+                  style={styles.InputTextArea}
+                />
+              </View>
+            )}
+            {MatchBody === "Red Card" && (
+              <View style={{ marginTop: 10, flex: 1 }}>
+                <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
+                  Notification Note
+                </Text>
 
-              <TextInput
-                value={notificationNote}
-                onChangeText={(e) => {
-                  notificationNoteF(e);
-                }}
-                placeholder="Add Goal Scorer's Name"
-                style={styles.InputTextArea}
-              />
-            </View>}
+                <TextInput
+                  value={notificationNote}
+                  onChangeText={(e) => {
+                    notificationNoteF(e);
+                  }}
+                  placeholder="Add Goal Scorer's Name"
+                  style={styles.InputTextArea}
+                />
+              </View>
+            )}
 
             <View style={{ marginTop: 10, flex: 1 }}>
               <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
@@ -642,11 +626,8 @@ const MatchInfo = ({ route, navigation }) => {
           <Text style={{ color: "red", alignSelf: "center", padding: 3 }}>
             {notification}
           </Text>
+          <Button handleSubmit={handleSubmit} />
           <Button
-         
-            handleSubmit={handleSubmit}
-          />
-          <Button 
             txt={"Delete Match"}
             color={"red"}
             handleSubmit={() => {
@@ -660,5 +641,3 @@ const MatchInfo = ({ route, navigation }) => {
 };
 
 export default MatchInfo;
-
-

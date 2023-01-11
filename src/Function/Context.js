@@ -305,6 +305,10 @@ const AppProvider = ({ children }) => {
     loaderF(false);
   };
 
+  // Session Or Year
+
+  const sessions = ["2020/2021", "2021/2022", "2021/2022"];
+
   return (
     <AppContext.Provider
       value={{
