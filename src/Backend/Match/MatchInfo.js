@@ -59,14 +59,13 @@ Notifications.setNotificationHandler({
 
 const MatchInfo = ({ route, navigation }) => {
   const {
-    competition,
-    competitionF,
+    subAdmins,
+
     notification,
     notificationF,
     handleDeleteMatch,
     loader,
     loaderF,
-    TeamsFromDB,
   } = useGlobalContext();
 
   const { matchId } = route.params;
