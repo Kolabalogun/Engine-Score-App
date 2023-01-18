@@ -16,11 +16,10 @@ import { useGlobalContext } from "./Context";
 const Tabs = createMaterialBottomTabNavigator();
 
 const AdminNavigation = () => {
-const {currentTheme} = useGlobalContext()
+  const { currentTheme, subAdmins } = useGlobalContext();
 
   return (
     <Tabs.Navigator
-     
       barStyle={{
         backgroundColor:
           currentTheme === "Red"
@@ -106,8 +105,13 @@ const {currentTheme} = useGlobalContext()
     >
       <Tabs.Screen name="Top Pick" component={TopPick} />
       <Tabs.Screen name="MatchList" component={MatchList} />
-      <Tabs.Screen name="Team List" component={ListofTeams} />
-      <Tabs.Screen name="ListofPlayers" component={ListofPlayers} />
+
+      {!subAdmins && (
+        <>
+          <Tabs.Screen name="Team List" component={ListofTeams} />
+          <Tabs.Screen name="ListofPlayers" component={ListofPlayers} />
+        </>
+      )}
     </Tabs.Navigator>
   );
 };

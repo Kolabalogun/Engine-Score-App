@@ -554,8 +554,8 @@ const AddTeams = ({ navigation }) => {
                   </Text>
 
                   <TextInput
-                    value={Players.benchs4}
-                    name="benchs4"
+                    value={Players.benchs5}
+                    name="benchs5"
                     onChangeText={(e) =>
                       PlayersF((prev) => {
                         return { ...prev, benchs5: e };

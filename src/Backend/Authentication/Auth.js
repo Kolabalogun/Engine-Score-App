@@ -24,7 +24,7 @@ const Login = ({ navigation }) => {
     notificationF,
     loader,
     loaderF,
-
+    setsubAdmins,
     currentAdminF,
   } = useGlobalContext();
 
@@ -52,6 +52,13 @@ const Login = ({ navigation }) => {
       loaderF(false);
     } else {
       notificationF("All field must be filled");
+    }
+
+    if (
+      studentID === "Enginescoresubadmin" ||
+      studentID === "enginescoresubadmin"
+    ) {
+      setsubAdmins(true);
     }
   };
 

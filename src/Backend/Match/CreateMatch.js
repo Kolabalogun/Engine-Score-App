@@ -273,7 +273,6 @@ const CreateMatch = ({ navigation }) => {
                       placeholder="Enter Time e.g (03:00)"
                       maxLength={5}
                       style={styles.InputTextArea}
-                      keyboardType="decimal-pad"
                     />
                   </View>
                 </View>

@@ -309,6 +309,10 @@ const AppProvider = ({ children }) => {
 
   const sessions = ["2020/2021", "2021/2022", "2021/2022"];
 
+  // Sub Admins
+
+  const [subAdmins, setsubAdmins] = useState(null);
+
   return (
     <AppContext.Provider
       value={{
@@ -356,6 +360,9 @@ const AppProvider = ({ children }) => {
 
         PlayerGoalAssistData,
         getPlayerGoalAssistData,
+
+        setsubAdmins,
+        subAdmins,
       }}
     >
       {children}

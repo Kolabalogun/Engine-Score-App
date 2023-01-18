@@ -1,73 +1,84 @@
-import { KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useGlobalContext } from '../../Function/Context';
-import Header from '../../FrontEnd/Components/Others/Header';
-import SelectDropdown from 'react-native-select-dropdown';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../Utils/Firebase';
-import Loader from '../../FrontEnd/Components/Others/Loader';
-import { styles } from '../../Function/styles';
-import Button from '../../FrontEnd/Components/Others/Button';
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { useGlobalContext } from "../../Function/Context";
+import Header from "../../FrontEnd/Components/Others/Header";
+import SelectDropdown from "react-native-select-dropdown";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../Utils/Firebase";
+import Loader from "../../FrontEnd/Components/Others/Loader";
+import { styles } from "../../Function/styles";
+import Button from "../../FrontEnd/Components/Others/Button";
 
+const initialState = {
+  Competition: "",
+  TeamName: "",
+  Players: {
+    goalkepper: "",
+    defender1: "",
+    defender2: "",
+    defender3: "",
+    defender4: "",
+    defender5: "",
+    midfielders1: "",
+    midfielders2: "",
+    midfielders3: "",
+    midfielders4: "",
+    midfielders5: "",
+    attakers1: "",
+    attakers2: "",
+    attakers3: "",
+    attakers4: "",
+    attakers5: "",
+    benchs1: "",
+    benchs2: "",
+    benchs3: "",
+    benchs4: "",
+    benchs5: "",
+  },
 
+  TeamGroup: "",
+  TeamManager: "",
+  TeamFormation: "",
+  selectedImage: null,
 
-const initialState={
-    Competition: '',
-    TeamName:'',
-    Players:   {
-goalkepper: '',
-defender1: '',
-defender2: '',
-defender3: '',
-defender4: '',
-defender5: '',
-midfielders1:'',
-midfielders2:'',
-midfielders3:'',
-midfielders4:'',
-midfielders5:'',
-attakers1:'',
-attakers2:'',
-attakers3:'',
-attakers4:'',
-attakers5:'',
-benchs1:'',
-benchs2:'',
-benchs3:'',
-benchs4:'',
-benchs5:'',
+  stat: {
+    wins: "",
+    loss: "",
+    draw: "",
+    matchplayed: "",
+    gd: "",
+    points: "",
+  },
+  id: "",
+};
 
-    },
+const EditTeams = ({ route, navigation }) => {
+  const {
+    competition,
+    competitionF,
+    notification,
+    notificationF,
+    currentUser,
+    loader,
+    loaderF,
+    TeamsFromDB,
+  } = useGlobalContext();
 
-    TeamGroup: '',
-    TeamManager: '',
-    TeamFormation: '',
-    selectedImage: null,
+  const { teamId } = route.params;
 
-        stat: {
-      wins: '',
-      loss: '',
-      draw: '',
-      matchplayed:'',
-      gd:'',
-      points: '',
-      
-    },
-id:''
+  const [teamInfo, teamInfoF] = useState(initialState);
 
-}
-
-const EditTeams = ({route, navigation}) => {
-
-  const {competition, competitionF, notification, notificationF, currentUser, loader, loaderF, TeamsFromDB } = useGlobalContext();
-
-
-      const { teamId } = route.params;
-
-      const [teamInfo, teamInfoF] =useState(initialState)
-
-
-      useEffect(() => {
+  useEffect(() => {
     teamId && getBlogDetail();
   }, [teamId]);
 
@@ -79,94 +90,62 @@ const EditTeams = ({route, navigation}) => {
     }
   };
 
-
-  const{   Competition,
-    TeamName, stat,
+  const {
+    Competition,
+    TeamName,
+    stat,
     Players,
-  TeamGroup,
+    TeamGroup,
     TeamManager,
     TeamFormation,
-    selectedImage,} = teamInfo
+    selectedImage,
+  } = teamInfo;
 
-
-
-
-
-
-
-
-
-  const competitionData = ['Engine 4.0', 'Engine 3.0']
-  const formationData = ['4-4-2', '4-3-3', '4-2-3-1', '3-4-3', '3-5-2']
-
-
- 
- 
-
-   
-
-
-
+  const competitionData = ["Engine 4.0", "Engine 3.0"];
+  const formationData = ["4-4-2", "4-3-3", "4-2-3-1", "3-4-3", "3-5-2"];
 
   const [dateId, setdateId] = useState("");
 
-    // to set timeId
-    useEffect(() => {
-        const dateId = new Date().getTime();
-        const realTime = new Date().toLocaleTimeString()
-        const realDate = new Date().toDateString()
+  // to set timeId
+  useEffect(() => {
+    const dateId = new Date().getTime();
+    const realTime = new Date().toLocaleTimeString();
+    const realDate = new Date().toDateString();
 
-        // TeamNameF(`${realDate} ${realTime}`);
+    // TeamNameF(`${realDate} ${realTime}`);
 
-        
-        setdateId(dateId);
-    }, []);
-
-   
-
-
+    setdateId(dateId);
+  }, []);
 
   const Imagepicker = async () => {
     let result = await pickImage();
     if (!result.cancelled) {
-
-        
-     teamInfoF((prev) => ({ ...prev, selectedImage: result.uri }));
-    
-
+      teamInfoF((prev) => ({ ...prev, selectedImage: result.uri }));
     }
   };
 
-
   const handleSubmit = async (e) => {
-    
-      e.preventDefault();
+    e.preventDefault();
 
-      if (teamInfo) {
-loaderF(true)
-        try {
-          await updateDoc(doc(db, "Teams", teamId), {
-            ...teamInfo
-          });
-  navigation.navigate("Team List");
-  loaderF(false);
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        return notificationF("field must be filled");
+    if (teamInfo) {
+      loaderF(true);
+      try {
+        await updateDoc(doc(db, "Teams", teamId), {
+          ...teamInfo,
+        });
+        navigation.navigate("Team List");
+        loaderF(false);
+      } catch (err) {
+        console.log(err);
       }
-    
- 
+    } else {
+      return notificationF("field must be filled");
+    }
+  };
 
-  }
-
- 
   function functions() {
-     navigation.goBack()  }
-
-  
-
+    navigation.goBack();
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -187,8 +166,6 @@ loaderF(true)
           </View>
 
           <KeyboardAvoidingView style={styles.Inputs}>
-     
-
             <View style={{ marginTop: 10 }}>
               <Text style={{ paddingVertical: 3, fontWeight: "600" }}>
                 Competition
@@ -201,8 +178,6 @@ loaderF(true)
                 buttonStyle={styles.dropdownStyle}
                 buttonTextStyle={styles.dropdownStyleTxt}
                 onSelect={(selectedItem, index) => {
-                 
-
                   teamInfoF((prev) => ({ ...prev, Competition: selectedItem }));
                 }}
               />
@@ -807,8 +782,8 @@ loaderF(true)
               </Text>
 
               <TextInput
-                value={Players.benchs4}
-                name="benchs4"
+                value={Players.benchs5}
+                name="benchs5"
                 onChangeText={(e) => {
                   teamInfoF({
                     ...teamInfo,
@@ -831,7 +806,6 @@ loaderF(true)
       )}
     </SafeAreaView>
   );
-}
+};
 
-export default EditTeams
-
+export default EditTeams;

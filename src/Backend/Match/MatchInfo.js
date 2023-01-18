@@ -627,13 +627,16 @@ const MatchInfo = ({ route, navigation }) => {
             {notification}
           </Text>
           <Button handleSubmit={handleSubmit} />
-          <Button
-            txt={"Delete Match"}
-            color={"red"}
-            handleSubmit={() => {
-              handleDeleteMatch(matchId);
-            }}
-          />
+
+          {!subAdmins && (
+            <Button
+              txt={"Delete Match"}
+              color={"red"}
+              handleSubmit={() => {
+                handleDeleteMatch(matchId);
+              }}
+            />
+          )}
         </ScrollView>
       )}
     </SafeAreaView>
