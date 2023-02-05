@@ -36,7 +36,7 @@ const ListofPlayers = ({ navigation }) => {
   }
 
   const handleDeletePlayer = async (id) => {
-    const data = PlayerGoalAssistData.filter((dad, index) => index !== id);
+    const data = PlayerGoalAssistData.map((dad, index) => index !== id);
 
     try {
       await updateDoc(doc(db, "Player Data", "WmVhSufxYzBSkL8HsqkF"), {

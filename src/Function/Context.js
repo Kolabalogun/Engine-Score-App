@@ -263,7 +263,7 @@ const AppProvider = ({ children }) => {
 
   // let projectVersion = "1.8";
 
-  const [projectVersion, projectVersionF] = useState("1.8");
+  const [projectVersion, projectVersionF] = useState("1.9");
 
   const [AutoUpdateState, AutoUpdateStateF] = useState({
     isthereUpdate: false,
