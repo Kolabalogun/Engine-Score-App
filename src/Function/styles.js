@@ -1,5 +1,4 @@
-            import { StyleSheet } from "react-native";
-
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
 
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
 
   headerTitle: {
@@ -125,11 +124,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-eachMatchTeamTxt: {
+  eachMatchTeamTxt: {
     fontWeight: "500",
-   flexWrap:'wrap',
-   fontSize: 14,
-
+    flexWrap: "wrap",
+    fontSize: 14,
   },
 
   eachMatchTeamTime: {
@@ -195,13 +193,13 @@ eachMatchTeamTxt: {
   tableHead: {
     color: "black",
     fontWeight: "500",
-fontSize: 13,
+    fontSize: 13,
     flex: 1,
   },
   tableHeadOne: {
     color: "black",
     fontWeight: "500",
-fontSize: 13,
+    fontSize: 13,
     flex: 4,
   },
   //Group
@@ -214,7 +212,7 @@ fontSize: 13,
     display: "flex",
     flexDirection: "column",
     color: "#aaa",
-  
+
     paddingBottom: 30,
   },
 
@@ -226,7 +224,6 @@ fontSize: 13,
 
   eachPerformanceScore: {
     fontWeight: "500",
-    
   },
 
   //Performance
@@ -363,7 +360,6 @@ fontSize: 13,
     marginVertical: 5,
     justifyContent: "space-between",
 
-    
     // borderWidth: 1,
     borderRadius: 12,
     flexDirection: "row",
@@ -372,7 +368,7 @@ fontSize: 13,
   option: {
     fontSize: 17,
     fontWeight: "500",
-    
+
     paddingHorizontal: 10,
   },
 

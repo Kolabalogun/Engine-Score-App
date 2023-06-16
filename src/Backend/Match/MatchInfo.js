@@ -247,6 +247,8 @@ const MatchInfo = ({ route, navigation }) => {
   const [UsersToken, UsersTokenF] = useState([""]);
   const [UsersList, UsersListF] = useState([""]);
 
+  console.log(UsersList);
+
   useEffect(() => {
     getUserDetail();
   }, []);

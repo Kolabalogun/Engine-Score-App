@@ -37,6 +37,7 @@ const Login = ({ navigation }) => {
   const handleSignIn = () => {
     if (studentID && password) {
       loaderF(true);
+
       signInWithEmailAndPassword(auth, studentEmail, password)
         .then((userCredential) => {
           const user = userCredential.user;
